@@ -44,6 +44,11 @@
         "unity_version":"6000.5.x",
         "hybridclr" : { "branch":"v6000.5.x-8.15.0"},
         "il2cpp_plus": { "branch":"v6000.5.x-8.15.0"}
+    },
+    {
+        "unity_version":"6000.6.x",
+        "hybridclr" : { "branch":"6000.6.x"},
+        "il2cpp_plus": { "branch":"6000.6.x"}
     }
     ]
 }

@@ -14,10 +14,10 @@ namespace HybridCLR.Editor.Settings
         public bool useGlobalIl2cpp;
 
         [Tooltip("hybridclr repo URL")]
-        public string hybridclrRepoURL = "https://gitee.com/focus-creative-games/hybridclr";
+        public string hybridclrRepoURL = "https://github.com/agonist-ai/hybridclr";
 
         [Tooltip("il2cpp_plus repo URL")]
-        public string il2cppPlusRepoURL = "https://gitee.com/focus-creative-games/il2cpp_plus";
+        public string il2cppPlusRepoURL = "https://github.com/agonist-ai/il2cpp_plus";
 
         [Tooltip("hot update assembly definitions(asd)")]
         public AssemblyDefinitionAsset[] hotUpdateAssemblyDefinitions;
