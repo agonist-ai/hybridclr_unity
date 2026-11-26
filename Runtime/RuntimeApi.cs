@@ -135,5 +135,40 @@ namespace HybridCLR
         [MethodImpl(MethodImplOptions.InternalCall)]
         public static extern int GetRuntimeOption(RuntimeOptionId optionId);
 #endif
+
+        // ---- load gate (agonist-ai fork, native hybridclr/LoadGate.h) ----
+        // The one door for code bytes. In VerifiedOnly (the native default of this fork) Assembly.Load(byte[]) and
+        // LoadMetadataForAOTAssembly accept bytes only after AllowLoad was called with their SHA-256 (one ticket, one load).
+        // The app's signed-delivery module verifies signature, app build and hash, then calls AllowLoad right before
+        // loading. BuiltinOnly refuses every load. The mode can only be tightened during the process lifetime.
+
+#if UNITY_EDITOR
+        public static LoadGateMode GetLoadGate() => LoadGateMode.Open;
+        public static LoadGateMode SetLoadGate(LoadGateMode mode) => LoadGateMode.Open;
+        public static bool AllowLoad(byte[] sha256) => sha256 != null && sha256.Length == 32;
+        public static int GetLoadGateCount(bool refused) => 0;
+#else
+        public static LoadGateMode GetLoadGate() => (LoadGateMode)GetLoadGateNative();
+        public static LoadGateMode SetLoadGate(LoadGateMode mode) => (LoadGateMode)SetLoadGateNative((int)mode);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public static extern bool AllowLoad(byte[] sha256);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public static extern int GetLoadGateCount(bool refused);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private static extern int GetLoadGateNative();
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private static extern int SetLoadGateNative(int mode);
+#endif
+    }
+
+    public enum LoadGateMode
+    {
+        Open = 0,
+        VerifiedOnly = 1,
+        BuiltinOnly = 2,
     }
 }
