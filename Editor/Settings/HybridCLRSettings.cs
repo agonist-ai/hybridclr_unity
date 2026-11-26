@@ -7,8 +7,11 @@ namespace HybridCLR.Editor.Settings
 
     public class HybridCLRSettings : ScriptableObject
     {
+        // agonist-ai fork: off unless a project says so. A project that lists this package but has no
+        // ProjectSettings/HybridCLRSettings.asset (it keeps the file out of git and writes it only for an interpreter
+        // build) must build plain IL2CPP — upstream's default «true» sent every such build to a local il2cpp copy.
         [Tooltip("enable HybridCLR")]
-        public bool enable = true;
+        public bool enable = false;
 
         [Tooltip("use il2cpp in unity editor installation location")]
         public bool useGlobalIl2cpp;
